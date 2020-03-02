@@ -1,1 +1,1 @@
-# transcriptional-module-discovery
+# Transcriptional module discovery
