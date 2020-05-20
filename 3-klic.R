@@ -326,16 +326,19 @@ HwMatrix <-
     )
 
 png(
-    paste(
+    paste0(
         "figures/klic_weightedKernel_", bestK, "clusters_",
         harbisonClusteringAlgorithm,
-        ".png",
-        sep = ""
+        ".png"
     ),
     height = 800,
     width = 900
 )
-HwMatrix
+draw(
+    HwMatrix,
+    heatmap_legend_side = "bottom",
+    annotation_legend_side = "bottom"
+)
 dev.off()
 
 png(
