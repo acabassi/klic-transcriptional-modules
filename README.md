@@ -23,11 +23,11 @@ The code contained in this folder can be used to reproduce the transcriptional m
 
 - Cabassi, A. and Kirk, P.D., 2020. Multiple kernel learning for integrative consensus clustering of 'omic datasets. arXiv preprint arXiv:1904.07701.
 
-- Granovskaia, M. V. et al. (2010). High-resolution transcription atlas of the mitotic cell cycle in budding yeast. Genome biology, 11(3):R24.
+- Granovskaia, M. V. et al., 2010. High-resolution transcription atlas of the mitotic cell cycle in budding yeast. Genome biology, 11(3):R24.
 
-- Harbison, C. T. et al. (2004). Transcriptional regulatory code of a eucaryotic genome. Nature, 431(7004):99–104. 
+- Harbison, C. T. et al., 2004. Transcriptional regulatory code of a eucaryotic genome. Nature, 431(7004):99–104. 
 
-- Kirk, P. D. W. et al. (2012). Bayesian correlated clustering to integrate multiple datasets. Bioinformatics, 28(24):3290–3297.
+- Kirk, P. D. W. et al., 2012. Bayesian correlated clustering to integrate multiple datasets. Bioinformatics, 28(24):3290–3297.
 
 ## Contact
 
