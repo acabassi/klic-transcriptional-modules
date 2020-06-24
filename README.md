@@ -21,7 +21,7 @@ The code contained in this folder can be used to reproduce the transcriptional m
 
 ## References
 
-- Cabassi, A. and Kirk, P.D., 2020. Multiple kernel learning for integrative consensus clustering of 'omic datasets. arXiv preprint arXiv:1904.07701.
+- Cabassi, A., Kirk, P. D. W., 2020. Multiple kernel learning for integrative consensus clustering of genomic datasets. Bioinformatics, btaa593.
 
 - Granovskaia, M. V. et al., 2010. High-resolution transcription atlas of the mitotic cell cycle in budding yeast. Genome biology, 11(3):R24.
 
