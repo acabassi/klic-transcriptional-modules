@@ -73,7 +73,7 @@ CM[rownames(ccM), colnames(ccM), "Marina"]   <- ccM
 
 # Initialise array of kernel matrices
 
-maxK <- 10
+maxK <- 25
 KM <- array(0, c(N, N, maxK - 1))
 clLabels <- array(NA, c(maxK - 1, N))
 theta <- array(NA, c(maxK - 1, N, n_datasets))
@@ -81,39 +81,39 @@ theta <- array(NA, c(maxK - 1, N, n_datasets))
 parameters <- list()
 parameters$iteration_count <-
     100 # set the maximum number of iterations
-# 
-# for(i in 2:maxK) {
-#     # Use kernel k-means with K=i to find weights and cluster labels
-#     parameters$cluster_count <- i # set the number of clusters K
-#     lmkkm <- lmkkmeans_missingData(CM, parameters, verbose = TRUE)
-# 
-#     # Compute weighted matrix
-#     for (j in 1:dim(CM)[3]) {
-#         KM[, , i - 1] <-
-#             KM[, , i - 1] + (lmkkm$Theta[, j] %*% t(lmkkm$Theta[, j])) * CM[, , j]
-#     }
-# 
-#     # Save cluster labels
-#     clLabels[i - 1, ] <- lmkkm$clustering
-#     theta[i - 1, , ] <- lmkkm$Theta
-# }
+
+for(i in 2:maxK) {
+    # Use kernel k-means with K=i to find weights and cluster labels
+    parameters$cluster_count <- i # set the number of clusters K
+    lmkkm <- lmkkmeans_missingData(CM, parameters, verbose = TRUE)
+
+    # Compute weighted matrix
+    for (j in 1:dim(CM)[3]) {
+        KM[, , i - 1] <-
+            KM[, , i - 1] + (lmkkm$Theta[, j] %*% t(lmkkm$Theta[, j])) * CM[, , j]
+    }
+
+    # Save cluster labels
+    clLabels[i - 1, ] <- lmkkm$clustering
+    theta[i - 1, , ] <- lmkkm$Theta
+}
 
 ######################################### Maximise silhouette ######################################
 
-# maxSil <- maximiseSilhouette(KM, clLabels, maxK = maxK)
+maxSil <- maximiseSilhouette(KM, clLabels, maxK = maxK)
 
-# save(
-#     KM,
-#     clLabels,
-#     theta,
-#     maxSil,
-#     file = paste(
-#         "data/klic_output_",
-#         harbisonClusteringAlgorithm,
-#         ".RData",
-#         sep = ""
-#     )
-# )
+save(
+    KM,
+    clLabels,
+    theta,
+    maxSil,
+    file = paste(
+        "data/klic_output_",
+        harbisonClusteringAlgorithm,
+        ".RData",
+        sep = ""
+    )
+)
 
 load(paste(
     "data/klic_output_",
@@ -122,7 +122,7 @@ load(paste(
     sep = ""
 ))
 
-dimnames(theta) <- list(paste(as.character(2:10), "_clusters"),
+dimnames(theta) <- list(paste(as.character(2:maxK), "_clusters"),
                         rownames(CM),
                         c("ChIP", "Expression")
 )
@@ -151,24 +151,26 @@ write.table(
     quote = TRUE
 )
 
-shuffledClustersBestK <- sample(clustersBestK)
-table(clustersBestK)
-table(shuffledClustersBestK)
-names(shuffledClustersBestK) <- names(clustersBestK)
-sum(1-(clustersBestK==shuffledClustersBestK))
-write.table(
-    as.data.frame(shuffledClustersBestK),
-    paste(
-        "goto-scores/klic_",
-        bestK,
-        "clusters_shuffled_",
-        harbisonClusteringAlgorithm,
-        ".csv",
-        sep = ""
-    ),
-    col.names = FALSE,
-    quote = TRUE
-)
+# This is just to make sure that our GOTO scores are better than what we would
+# have obtained just by chance 
+# shuffledClustersBestK <- sample(clustersBestK)
+# table(clustersBestK)
+# table(shuffledClustersBestK)
+# names(shuffledClustersBestK) <- names(clustersBestK)
+# sum(1-(clustersBestK==shuffledClustersBestK))
+# write.table(
+#     as.data.frame(shuffledClustersBestK),
+#     paste(
+#         "goto-scores/klic_",
+#         bestK,
+#         "clusters_shuffled_",
+#         harbisonClusteringAlgorithm,
+#         ".csv",
+#         sep = ""
+#     ),
+#     col.names = FALSE,
+#     quote = TRUE
+# )
 
 # Let's just plot the clusters:
 table(clustersBestK)
